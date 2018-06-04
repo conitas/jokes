@@ -23,7 +23,7 @@ repositories {
 	mavenCentral()
 }
 
-group = 'de.itasgmbh'
+group = 'itasgmbhde'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 apply plugin: 'com.palantir.docker'
