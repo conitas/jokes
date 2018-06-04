@@ -10,6 +10,10 @@ buildscript {
 	}
 }
 
+plugins {
+    id 'com.palantir.docker' version '0.19.2'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -22,9 +26,13 @@ repositories {
 group = 'de.itasgmbh'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+apply plugin: 'com.palantir.docker'
 
-repositories {
-	mavenCentral()
+docker {
+	dependsOn build
+	name "${project.group}/${bootJar.baseName}"
+	files bootJar.archivePath
+	buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
 
 
