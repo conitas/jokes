@@ -24,7 +24,7 @@ This tiny spring boot micro service demonstrates usage of Spring MVC Rest, Sprin
  
 ## Running
   ```bash
- docker run -it --rm -e "spring.data.mongodb.uri=mongodb://<user>:<password>@<host>:<port>/<databaseName>?ssl=true" -p 8080:8080 itasgmbh/jokes
+ docker run -it --rm -e "spring.data.mongodb.uri=mongodb://<user>:<password>@<host>:<port>/<databaseName>?ssl=true" -p 8080:8080 itasgmbhde/jokes
   ```
 Enjoy this amazing app listening at http://localhost:8080 !
 
