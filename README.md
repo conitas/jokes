@@ -15,7 +15,7 @@ This tiny spring boot micro service demonstrates usage of Spring MVC Rest, Sprin
 ## Push docker image to docker.io
 1. Login to docker.io:
    ```bash
-     docker login docker.io -u itasgmbh -p ...
+     docker login docker.io -u itasgmbhde -p ...
    ```  
 1. Push image to docker.io
    ```bash
