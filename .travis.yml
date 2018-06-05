@@ -3,10 +3,21 @@ install:
   gradle assemble
 services:
   - docker
+
+# Get latest install-jdk.sh script
+before_install:
+  - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
+
+matrix:
+  include:
+# Java 10 "OpenJDK"
+    - env: JDK='OpenJDK 10'
+      install: . ./install-jdk.sh -F 10 -L GPL
 script:
-  - gradle check
-  - gradle docker
+  - chmod +x gradlew
+  - ./gradlew check
+  - ./gradlew docker
   - if [[ $TRAVIS_BRANCH == master && $TRAVIS_PULL_REQUEST == false ]]; then
       echo "$DOCKER_IO_PASSWORD" | docker login docker.io -u itasgmbhde --password-stdin;
-      gradle dockerPush;
+      ./gradlew dockerPush;
     fi
