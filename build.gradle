@@ -10,6 +10,10 @@ buildscript {
 	}
 }
 
+plugins {
+    id 'com.palantir.docker' version '0.19.2'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -19,12 +23,16 @@ repositories {
 	mavenCentral()
 }
 
-group = 'de.itasgmbh'
+group = 'itasgmbhde'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+apply plugin: 'com.palantir.docker'
 
-repositories {
-	mavenCentral()
+docker {
+	dependsOn build
+	name "${project.group}/${bootJar.baseName}"
+	files bootJar.archivePath
+	buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
 
 
@@ -33,6 +41,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 }
 
 task wrapper(type: Wrapper, description: "Update the Gradle wrapper") { gradleVersion = project."gradle.version" }
