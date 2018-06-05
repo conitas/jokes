@@ -6,5 +6,7 @@ services:
 script:
   - gradle check
   - gradle docker
-  - echo "$DOCKER_IO_PASSWORD" | docker login docker.io -u itasgmbhde --password-stdin
-  - gradle dockerPush
+  - if [[ $TRAVIS_BRANCH == master && $TRAVIS_PULL_REQUEST == false ]]; then
+      echo "$DOCKER_IO_PASSWORD" | docker login docker.io -u itasgmbhde --password-stdin;
+      gradle dockerPush;
+    fi
