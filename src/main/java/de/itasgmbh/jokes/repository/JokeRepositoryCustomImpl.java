@@ -7,12 +7,16 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class JokeRepositoryCustomImpl implements JokeRepositoryCustom {
 
     private final MongoTemplate mongoTemplate;
+
+    private final Map<String,List<Joke>> jokesByLanguage = new ConcurrentHashMap<>();
 
     @Autowired
     public JokeRepositoryCustomImpl(MongoTemplate mongoTemplate) {
@@ -21,9 +25,11 @@ public class JokeRepositoryCustomImpl implements JokeRepositoryCustom {
 
     @Override
     public List<Joke> findRandom(int quantity, String language) {
-        List<Joke> jokes = mongoTemplate.find(new Query()
-                .addCriteria(Criteria.where("language").regex(language)), Joke.class, Joke.COLLECTION);
-
+        if(!jokesByLanguage.containsKey(language)) {
+            jokesByLanguage.put(language, mongoTemplate.find(new Query()
+                    .addCriteria(Criteria.where("language").regex(language)), Joke.class, Joke.COLLECTION));
+        }
+        var jokes = jokesByLanguage.get(language);
         if (jokes.size() <= quantity || jokes.isEmpty()) {
             return jokes;
         } else {
