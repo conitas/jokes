@@ -1,6 +1,6 @@
 # Demonstration Project delivers some Chuck Norris Jokes
 
-![Travis CI master-branch](https://travis-ci.org/itasgmbh/jokes.svg?branch=master)
+[![Build Status](https://travis-ci.org/itasgmbh/jokes.svg?branch=master)](https://travis-ci.org/itasgmbh/jokes)
 
 Caution: early ALPHA stage!
 
