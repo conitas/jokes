@@ -1,6 +1,7 @@
 package de.itasgmbh.jokes;
 
 import de.itasgmbh.jokes.model.Joke;
+import de.itasgmbh.jokes.repository.JokeReactiveRepository;
 import de.itasgmbh.jokes.repository.JokeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,10 +15,12 @@ import java.nio.file.Files;
 @SpringBootApplication
 public class JokesApplication implements CommandLineRunner {
     private final JokeRepository repository;
+    private final JokeReactiveRepository reactiveRepository;
 
     @Autowired
-    public JokesApplication(JokeRepository repository) {
+    public JokesApplication(JokeRepository repository, JokeReactiveRepository reactiveRepository) {
         this.repository = repository;
+        this.reactiveRepository = reactiveRepository;
     }
 
     public static void main(String[] args) {
